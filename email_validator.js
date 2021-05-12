@@ -20,7 +20,7 @@ let regex3 = /@(?:[a-z0-9\x{00a1}\-\x{ffff}-]+)(?:\.[a-z0-9\x{00a1}\-\x{ffff}-]+
 
 function myFunction() {
 
-	var elementValue = document.getElementById("email").value;
+	var elementValue = document.getElementById("email_entry").value;
 
     document.getElementById("myAnchor").innerHTML = elementValue;
 
