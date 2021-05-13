@@ -1,122 +1,72 @@
 
+let regexFull = /([\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)(\.[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)*(?:\.{0,1})@([a-z0-9\x{00a1}\-\x{ffff}-]+)(?:\.[a-z0-9\x{00a1}\-\x{ffff}-]+)*(\.[a-z]{2,})/;
 
-let regexFull = /[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+(?:\.[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)*\.{0,1}@[a-z0-9\x{00a1}\-\x{ffff}-]+(?:\.[a-z0-9\x{00a1}\-\x{ffff}-]+)*(?:\.[a-z]{2,})\S/;
+//before @ symbol
+let regex_user = /[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+(?:\.[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)*\.{0,1}/;
+//domain (group1)
+let regex_domain = /(?:\@)([a-z0-9\x{00a1}\-\x{ffff}-]+)/;
+//tld (group1)
+let regex_tld = /@(?:[a-z0-9\x{00a1}\-\x{ffff}-]+)(?:\.[a-z0-9\x{00a1}\-\x{ffff}-]+)*(\.[a-z]{2,})/;
+
+function regex(){
+  let entry;
+  let match_full; 
+  let match_username; 
+  let match_domain; 
+  let match_tld; 
+
+	entry = document.getElementById("email_entry").value;
+  match_full = entry.match(regexFull);
+  match_username = entry.match(regex_user);
+  match_domain = entry.match(regex_domain);
+  match_tld = entry.match(regex_tld);
+  document.getElementById("mirror").innerHTML = entry;
 
 
-
-let regex1 = /[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+(?:\.[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)*\.{0,1}/;
-
-
-
-let regex2 = /(?:[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+(?:\.[\+_a-z0-9\x{00a1}\-\x{ffff}\-'!#$%&*=?^_`{|}~-]+)*\.{0,1})@([a-z0-9\x{00a1}\-\x{ffff}-]+)/;
-
-
-
-let regex3 = /@(?:[a-z0-9\x{00a1}\-\x{ffff}-]+)(?:\.[a-z0-9\x{00a1}\-\x{ffff}-]+)*(\.[a-z]{2,})/;
-
-
-
-
-
-function myFunction() {
-
-	var elementValue = document.getElementById("email_entry").value;
-
-    document.getElementById("myAnchor").innerHTML = elementValue;
-
+  // Final validation
   
-
-  if (regexFull.exec(elementValue))
-
-  {
-
+  if (match_full && entry == match_full[0]){
     document.getElementById("finalValid").style.color = "blue"; 
-
     document.getElementById("finalValid").innerHTML = "Your email is valid";
 
-    
-
   }else{
-
     document.getElementById("finalValid").style.color = "red"; 
-
     document.getElementById("finalValid").innerHTML = "Your email is not valid";
 
   }
 
 
-
-  
-
-  if (regex1.test(elementValue))
-
-  {
-
-    let array1;
-
-    array1 = regex1.exec(elementValue)
-
-    document.getElementById("regex1_results").innerHTML = `${array1[0]}`;
-
-    document.getElementById("regex1_results").style.color = "blue"; 
-
-    }
-
-    else
-
-    {
-
-      document.getElementById("regex1_results").style.color = "red"; 
-
-    }
-
-  
-
-  if (regex2.test(elementValue))
-
-  {
-
-    let array2;
-
-    array2 = regex2.exec(elementValue)
-
-    document.getElementById("regex2_results").innerHTML = `${array2[1]}`;
-
-    document.getElementById("regex2_results").style.color = "blue"; 
-
+  // username before @ symbol
+  if(match_username){
+    document.getElementById("username_results").innerHTML = `${match_username[0]}`;
+    document.getElementById("username_results").style.color = "blue";
+  }
+  else{
+    document.getElementById("username_results").innerHTML = '';
   }
 
-  else
 
-  {
-
-    document.getElementById("regex2_results").style.color = "red"; 
-
-  } 
-
-  if (regex3.test(elementValue))
-
-  {
-
-    let array3;
-
-    array3 = regex3.exec(elementValue)
-
-    document.getElementById("regex3_results").innerHTML = `${array3[1]}`;
-
-    document.getElementById("regex3_results").style.color = "blue"; 
-
+  // Domain
+ if(match_domain && match_domain[1]){
+    document.getElementById("domain_results").innerHTML = `${match_domain[1]}`;
+    document.getElementById("domain_results").style.color = "blue";
+  }
+  else{
+    document.getElementById("domain_results").innerHTML = '';
   }
 
-  else
-
-  {
-
-    document.getElementById("regex3_results").style.color = "red"; 
-
+  // TLD
+  if(match_tld){
+    document.getElementById("tld_results").innerHTML = `${match_tld[1]}`;
+    document.getElementById("tld_results").style.color = "blue";
+  }
+  else{
+    document.getElementById("tld_results").innerHTML = '';
   }
 
-   
+
+
+
 
    
 
